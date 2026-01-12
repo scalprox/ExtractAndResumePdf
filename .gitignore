@@ -1,0 +1,10 @@
+files
+gameVendor
+test
+*.json
+synthsize.go
+.env
+.venv
+.DS_Store
+__pycache__/
+.idea
