@@ -5,3 +5,4 @@ Pillow==12.1.0
 scikit_learn==1.8.0
 paddlepaddle
 python-multipart
+uvicorn

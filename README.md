@@ -10,11 +10,14 @@ Le projet automatise le pipeline suivant :
 3.  **Synthèse IA** : Combinaison des sorties OCR et génération d'un résumé détaillé des règles à l'aide d'un modèle de langage via **Ollama**.
 4.  **Persistance** : Stockage du résultat final dans une base de données.
 
+## Example
+
+Vous pouvez retrouver un example [d'extraction du texte](./example/extraction.md) depuis [ce pdf](./example/notice_de_jeu.pdf)
+
 ## 🛠️ Prérequis
 
 *   **Go** : Version 1.25 ou supérieure.
 *   **Python** : Version 3.x avec `pip`.
-*   **Ollama** : Installé et fonctionnel sur votre machine.
 *   **Base de données** : Configurée selon vos paramètres dans le fichier `.env`.
 
 ## 🚀 Installation
@@ -31,7 +34,7 @@ source .venv/bin/activate  # Sur Windows : .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 ### 2. Configuration
-Assurez-vous d'avoir un fichier `.env` à la racine du projet contenant les variables nécessaires (PG_URL, OLLAMA_API).
+Assurez-vous d'avoir un fichier `.env` à la racine du projet contenant les variables nécessaires [voir le fichier example](.env.example).
 
 ## 🏃 Exécution
 
@@ -45,11 +48,8 @@ uvicorn ocr_service:app --host 0.0.0.0 --port 8000
 ```
 *Le serveur tournera par défaut sur le port 8000.*
 
-### Étape 2 : Lancer Ollama
-Assurez-vous que le serveur **Ollama** est lancé pour permettre la génération du résumé par le modèle Cloud/Local.
-
-### Étape 3 : Lancer l'application Go
-Une fois les services Python et Ollama prêts, lancez le traitement principal :
+### Étape 2 : Lancer l'application Go
+Une fois le service Python prêt, lancez le traitement principal :
 ```
 bash
 go run main.go
@@ -61,8 +61,3 @@ go run main.go
 *   `logic/` :
     *   `extract.go` : Logique d'extraction des images du PDF.
     *   `save.go` : Gestion de la sauvegarde en base de données.
-*   `synthsize.go` : Logique d'appel à Ollama pour la synthèse des textes.
-*   `files/` : Dossier source pour les fichiers PDF à traiter.
-
-## 📝 Notes
-- Assurez-vous que les PDF sont déposés dans le dossier approprié avant de lancer le script Go.

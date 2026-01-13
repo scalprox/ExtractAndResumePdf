@@ -8,10 +8,9 @@ import (
 	"os"
 	"sync"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
-
-var db = Db()
 
 func Db() *sql.DB {
 	pgUrl := os.Getenv("PG_URL")
@@ -28,7 +27,14 @@ func Db() *sql.DB {
 }
 
 func main() {
-	rows, err := db.Query("SELECT id, name, link_to_rules, link_to_illustration, editor, status, ocr_result, resume FROM game_detail WHERE status = 'pending' ORDER BY id LIMIT 30")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Unable to load .env file")
+	}
+
+	var db = Db()
+
+	rows, err := db.Query("SELECT id, name, link_to_rules, link_to_illustration, editor, status, ocr_result, resume FROM game_detail WHERE status = 'pending' ORDER BY id LIMIT 1")
 	if err != nil {
 		log.Fatal(err)
 	}
